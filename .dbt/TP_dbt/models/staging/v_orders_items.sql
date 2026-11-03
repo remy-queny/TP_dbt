@@ -1,3 +1,3 @@
 {{ config(materialized='view') }}
 
-SELECT *, (quantity * unitprice) AS total_price FROM bronze.orderitems
+SELECT orderid, orderitemid, productid, quantity, unitprice, updated_at, (quantity * unitprice) AS total_price FROM bronze.orderitems
