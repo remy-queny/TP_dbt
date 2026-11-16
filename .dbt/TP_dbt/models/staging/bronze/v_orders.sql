@@ -1,10 +1,16 @@
 {{ config(materialized='view', schema='silver') }}
 
-SELECT orderid, orderdate, customerid, employeeid, storeid, status,
+SELECT
+    orderid,
+    orderdate,
+    customerid,
+    employeeid,
+    storeid,
+    status,
     CASE
         WHEN Status = 1 THEN 'En cours'
         WHEN Status = 2 THEN 'Terminée'
         WHEN Status = 3 THEN 'Annulée'
         ELSE 'Inconnue'
     END AS StatusDescription
-FROM bronze.orders
+FROM {{ source('bronze', 'orders') }}
