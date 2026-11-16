@@ -1,4 +1,4 @@
-{{ config(materialized='view') }}
+{{ config(materialized='view', schema='bronze') }}
 
 SELECT orderid, orderdate, customerid, employeeid, storeid, status,
     CASE
