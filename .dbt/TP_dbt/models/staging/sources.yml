@@ -7,3 +7,8 @@ sources:
       - name: customers
       - name: orders
       - name: orderitems
+  - name: gold
+    schema: gold
+    tables:
+      - name: t_fact_orders
+      - name: t_customer_revenu
