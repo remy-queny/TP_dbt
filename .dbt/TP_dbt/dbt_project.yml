@@ -30,6 +30,11 @@ models:
       training:
         +schema: training
         +materialized: table
+        +pre-hook: "{{ log_model_execution(this, 'start') }}"
+        +post-hook: "{{ log_model_execution(this, 'end') }}"
+
+on-run-start:
+  - "{{ create_execution_logs_table() }}"
 
 vars:
   eur_rate_us: 0.8906
