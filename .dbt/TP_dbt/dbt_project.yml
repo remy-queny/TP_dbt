@@ -28,7 +28,7 @@ models:
         +schema: gold
         +materialized: table
       training:
-        +schema: TRAINING
+        +schema: training
         +materialized: table
 
 vars:

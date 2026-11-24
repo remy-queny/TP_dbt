@@ -3,7 +3,7 @@ version: 2
 sources:
   - name: training
     description: "Données de ventes provenant de la base training"
-    schema: TRAINING
+    schema: training
     tables:
       - name: sales_india
         description: "Ventes quotidiennes enregistrées en Inde"
