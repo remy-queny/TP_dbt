@@ -136,6 +136,8 @@ sources:
               - not_null
           - name: name
             description: "Nom du produit"
+            tests:
+              - not_null
           - name: category
             description: "Catégorie à laquelle appartient le produit"
           - name: retailprice
@@ -144,6 +146,11 @@ sources:
             description: "Prix d'achat du produit auprès du fournisseur"
           - name: supplierid
             description: "Identifiant du fournisseur du produit"
+            tests:
+              - not_null
+              - relationships:
+                  to: source('bronze', 'suppliers')
+                  field: supplierid
           - name: updated_at
             description: "Date et heure de la dernière mise à jour de l'enregistrement"
 
@@ -201,11 +208,19 @@ sources:
 
       - name: orderitems
         description: "Lignes de produits associées aux commandes"
+        tests:
+          - dbt_utils.unique_combination_of_columns:
+              combination_of_columns:
+                - orderid
+                - orderitemid
         columns:
           - name: orderid
             description: "Identifiant de la commande associée"
             tests:
               - not_null
+              - relationships:
+                  to: source('bronze', 'orders')
+                  field: orderid
           - name: orderitemid
             description: "Identifiant de la ligne de produit dans la commande"
             tests:
@@ -214,10 +229,17 @@ sources:
             description: "Identifiant du produit acheté"
             tests:
               - not_null
+              - relationships:
+                  to: source('bronze', 'products')
+                  field: productid
           - name: quantity
             description: "Quantité du produit commandée"
+            tests:
+              - not_null
           - name: unitprice
             description: "Prix unitaire du produit dans la commande"
+            tests:
+              - not_null
           - name: updated_at
             description: "Date et heure de la dernière mise à jour de l'enregistrement"
 
@@ -231,13 +253,34 @@ sources:
               - not_null
           - name: orderdate
             description: "Date à laquelle la commande a été passée"
+            tests:
+              - not_null
           - name: customerid
             description: "Identifiant du client ayant passé la commande"
+            tests:
+              - not_null
+              - relationships:
+                  to: source('bronze', 'customers')
+                  field: customerid
           - name: employeeid
             description: "Identifiant de l'employé ayant traité la commande"
+            tests:
+              - not_null
+              - relationships:
+                  to: source('bronze', 'employees')
+                  field: employeeid
           - name: storeid
             description: "Identifiant du magasin ayant enregistré la commande"
+            tests:
+              - not_null
+              - relationships:
+                  to: source('bronze', 'stores')
+                  field: storeid
           - name: status
             description: "Statut actuel de la commande"
+            tests:
+              - not_null
+              - accepted_values:
+                  values: ['01', '02', '03']
           - name: updated_at
             description: "Date et heure de la dernière mise à jour de l'enregistrement"
