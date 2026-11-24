@@ -13,7 +13,7 @@ FROM {{ source('bronze', 'customers') }}
 
 {% endsnapshot %}
 
--- UPDATE bronze.customers
+--UPDATE bronze.customers
 --SET phone = '67',
 --updated_at = NOW()
 --WHERE customerid = '20266';
