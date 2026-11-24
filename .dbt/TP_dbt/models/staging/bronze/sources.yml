@@ -1,21 +1,243 @@
 version: 2
 
 sources:
+  - name: training
+    description: "Données de ventes provenant de la base training"
+    schema: TRAINING
+    tables:
+      - name: sales_india
+        description: "Ventes quotidiennes enregistrées en Inde"
+        columns:
+          - name: sales_date
+            description: "Date à laquelle la vente a été enregistrée"
+          - name: quantity_sold
+            description: "Quantité de produits vendus"
+          - name: unit_sell_price
+            description: "Prix de vente unitaire"
+          - name: unit_purchase_cost
+            description: "Coût d'achat unitaire"
+
+      - name: sales_uk
+        description: "Ventes quotidiennes enregistrées au Royaume-Uni"
+        columns:
+          - name: sales_date
+            description: "Date à laquelle la vente a été enregistrée"
+          - name: quantity_sold
+            description: "Quantité de produits vendus"
+          - name: unit_sell_price
+            description: "Prix de vente unitaire"
+          - name: unit_purchase_cost
+            description: "Coût d'achat unitaire"
+
+      - name: sales_us
+        description: "Ventes quotidiennes enregistrées aux États-Unis"
+        columns:
+          - name: sales_date
+            description: "Date à laquelle la vente a été enregistrée"
+          - name: quantity_sold
+            description: "Quantité de produits vendus"
+          - name: unit_sell_price
+            description: "Prix de vente unitaire"
+          - name: unit_purchase_cost
+            description: "Coût d'achat unitaire"
+
   - name: bronze
+    description: "Tables sources brutes créées par le fichier Init_bronze.sql"
     schema: bronze
     tables:
       - name: customers
-      - name: orders
+        description: "Informations relatives aux clients"
+        columns:
+          - name: customerid
+            description: "Identifiant unique du client"
+            tests:
+              - unique
+              - not_null
+          - name: firstname
+            description: "Prénom du client"
+          - name: lastname
+            description: "Nom de famille du client"
+          - name: email
+            description: "Adresse électronique du client"
+          - name: phone
+            description: "Numéro de téléphone du client"
+          - name: address
+            description: "Adresse postale du client"
+          - name: city
+            description: "Ville de résidence du client"
+          - name: state
+            description: "État ou région de résidence du client"
+          - name: zipcode
+            description: "Code postal du client"
+          - name: updated_at
+            description: "Date et heure de la dernière mise à jour de l'enregistrement"
+
+      - name: dates
+        description: "Table de référence contenant les informations calendaires"
+        columns:
+          - name: date
+            description: "Date de référence"
+            tests:
+              - unique
+              - not_null
+          - name: day
+            description: "Numéro du jour dans le mois"
+          - name: month
+            description: "Numéro du mois dans l'année"
+          - name: year
+            description: "Année correspondant à la date"
+          - name: quarter
+            description: "Trimestre correspondant à la date"
+          - name: dayofweek
+            description: "Nom du jour de la semaine"
+          - name: weekofyear
+            description: "Numéro de la semaine dans l'année"
+          - name: updated_at
+            description: "Date et heure de la dernière mise à jour de l'enregistrement"
+
+      - name: employees
+        description: "Informations relatives aux employés"
+        columns:
+          - name: employeeid
+            description: "Identifiant unique de l'employé"
+            tests:
+              - unique
+              - not_null
+          - name: firstname
+            description: "Prénom de l'employé"
+          - name: lastname
+            description: "Nom de famille de l'employé"
+          - name: email
+            description: "Adresse électronique de l'employé"
+          - name: jobtitle
+            description: "Fonction ou intitulé du poste de l'employé"
+          - name: hiredate
+            description: "Date d'embauche de l'employé"
+          - name: managerid
+            description: "Identifiant de l'employé responsable"
+          - name: address
+            description: "Adresse postale de l'employé"
+          - name: city
+            description: "Ville de résidence de l'employé"
+          - name: state
+            description: "État ou région de résidence de l'employé"
+          - name: zipcode
+            description: "Code postal de l'employé"
+          - name: updated_at
+            description: "Date et heure de la dernière mise à jour de l'enregistrement"
+
+      - name: products
+        description: "Informations relatives aux produits"
+        columns:
+          - name: productid
+            description: "Identifiant unique du produit"
+            tests:
+              - unique
+              - not_null
+          - name: name
+            description: "Nom du produit"
+          - name: category
+            description: "Catégorie à laquelle appartient le produit"
+          - name: retailprice
+            description: "Prix de vente au détail du produit"
+          - name: supplierprice
+            description: "Prix d'achat du produit auprès du fournisseur"
+          - name: supplierid
+            description: "Identifiant du fournisseur du produit"
+          - name: updated_at
+            description: "Date et heure de la dernière mise à jour de l'enregistrement"
+
+      - name: suppliers
+        description: "Informations relatives aux fournisseurs"
+        columns:
+          - name: supplierid
+            description: "Identifiant unique du fournisseur"
+            tests:
+              - unique
+              - not_null
+          - name: suppliername
+            description: "Nom du fournisseur"
+          - name: contactperson
+            description: "Nom de la personne à contacter chez le fournisseur"
+          - name: email
+            description: "Adresse électronique du fournisseur"
+          - name: phone
+            description: "Numéro de téléphone du fournisseur"
+          - name: address
+            description: "Adresse postale du fournisseur"
+          - name: city
+            description: "Ville du fournisseur"
+          - name: state
+            description: "État ou région du fournisseur"
+          - name: zipcode
+            description: "Code postal du fournisseur"
+          - name: updated_at
+            description: "Date et heure de la dernière mise à jour de l'enregistrement"
+
+      - name: stores
+        description: "Informations relatives aux magasins"
+        columns:
+          - name: storeid
+            description: "Identifiant unique du magasin"
+            tests:
+              - unique
+              - not_null
+          - name: storename
+            description: "Nom du magasin"
+          - name: address
+            description: "Adresse postale du magasin"
+          - name: city
+            description: "Ville dans laquelle se trouve le magasin"
+          - name: state
+            description: "État ou région dans laquelle se trouve le magasin"
+          - name: zipcode
+            description: "Code postal du magasin"
+          - name: email
+            description: "Adresse électronique du magasin"
+          - name: phone
+            description: "Numéro de téléphone du magasin"
+          - name: updated_at
+            description: "Date et heure de la dernière mise à jour de l'enregistrement"
+
       - name: orderitems
+        description: "Lignes de produits associées aux commandes"
+        columns:
+          - name: orderid
+            description: "Identifiant de la commande associée"
+            tests:
+              - not_null
+          - name: orderitemid
+            description: "Identifiant de la ligne de produit dans la commande"
+            tests:
+              - not_null
+          - name: productid
+            description: "Identifiant du produit acheté"
+            tests:
+              - not_null
+          - name: quantity
+            description: "Quantité du produit commandée"
+          - name: unitprice
+            description: "Prix unitaire du produit dans la commande"
+          - name: updated_at
+            description: "Date et heure de la dernière mise à jour de l'enregistrement"
 
-  - name: gold
-    schema: gold
-    tables:
-      - name: t_fact_orders
-      - name: t_customer_revenu
-
-  - name: silver
-    schema: silver
-    tables:
-      - name: customers_clean
-      - name: orders_clean
+      - name: orders
+        description: "Commandes passées par les clients"
+        columns:
+          - name: orderid
+            description: "Identifiant unique de la commande"
+            tests:
+              - unique
+              - not_null
+          - name: orderdate
+            description: "Date à laquelle la commande a été passée"
+          - name: customerid
+            description: "Identifiant du client ayant passé la commande"
+          - name: employeeid
+            description: "Identifiant de l'employé ayant traité la commande"
+          - name: storeid
+            description: "Identifiant du magasin ayant enregistré la commande"
+          - name: status
+            description: "Statut actuel de la commande"
+          - name: updated_at
+            description: "Date et heure de la dernière mise à jour de l'enregistrement"

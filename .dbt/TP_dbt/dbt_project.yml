@@ -18,7 +18,7 @@ clean-targets:
 
 models:
   TP_dbt:
-    +materialized: table
+    +materialized: view
     staging:
       bronze:
         +schema: bronze
@@ -26,3 +26,13 @@ models:
         +schema: silver
       gold:
         +schema: gold
+        +materialized: table
+      training:
+        +schema: TRAINING
+        +materialized: table
+
+vars:
+  eur_rate_us: 0.8906
+  eur_rate_uk: 1.1777
+  eur_rate_india: 0.00926
+
